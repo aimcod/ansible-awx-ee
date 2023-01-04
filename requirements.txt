@@ -1,0 +1,2 @@
+awxkit==21.6.0
+urllib3
