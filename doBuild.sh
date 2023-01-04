@@ -1,7 +1,3 @@
-#! /bin/bash
-
-ansible-runner worker --private-data-dir=/runner
-(builder) [chnladmin@dev-awx-ee-01 ansible-builder]$ cat doBuild.sh
 if [ -z $1 ]
 then
         echo please provide the build number.
