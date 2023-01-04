@@ -1,0 +1,26 @@
+---
+version: 1
+dependencies:
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+additional_build_steps:
+  append:
+    - RUN yum upgrade -y
+    - RUN yum install -y python39
+    - RUN yum install -y python39-pip
+    - RUN yum install -y krb5-devel
+    - RUN yum install -y python39-devel
+    - RUN yum install -y gcc
+    - RUN alternatives --set python /usr/bin/python3.9
+    - RUN pip3.9 install --upgrade --force pip
+    - RUN python -m pip install --upgrade pip
+    - RUN pip3 uninstall --yes ansible-runner && pip install ansible-runner==2.2.2
+    - RUN pip3 install pypsrp[kerberos]
+    - RUN pip3 install pyVim PyVmomi
+    - COPY --from=quay.io/project-receptor/receptor:latest /usr/bin/receptor /usr/bin/receptor
+    - RUN mkdir -p /var/run/receptor
+    - USER 1000
+    - ADD run.sh /run.sh
+    - CMD /run.sh
+    - RUN git lfs install
